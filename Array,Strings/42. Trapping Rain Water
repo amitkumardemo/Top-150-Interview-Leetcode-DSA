@@ -1,0 +1,28 @@
+class Solution {
+    public int trap(int[] height) {
+        int left = 0, right = height.length - 1;   // Two pointers: left & right
+        int leftMax = 0, rightMax = 0;             // Max height on both sides
+        int totalWater = 0;                        // Final answer
+
+        while (left < right) {
+            if (height[left] < height[right]) {
+                // If current bar is less than leftMax, water can be trapped
+                if (height[left] >= leftMax) {
+                    leftMax = height[left];       // Update leftMax
+                } else {
+                    totalWater += leftMax - height[left]; // Trap water
+                }
+                left++;  // Move left pointer
+            } else {
+                if (height[right] >= rightMax) {
+                    rightMax = height[right];     // Update rightMax
+                } else {
+                    totalWater += rightMax - height[right]; // Trap water
+                }
+                right--;  // Move right pointer
+            }
+        }
+
+        return totalWater;
+    }
+}
