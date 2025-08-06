@@ -1,0 +1,39 @@
+import java.util.*;
+
+class RandomizedSet {
+    private Map<Integer, Integer> map;   // value -> index in list
+    private List<Integer> list;
+    private Random rand;
+
+    public RandomizedSet() {
+        map = new HashMap<>();
+        list = new ArrayList<>();
+        rand = new Random();
+    }
+
+    public boolean insert(int val) {
+        if (map.containsKey(val)) return false;
+        list.add(val);                          // Add to list
+        map.put(val, list.size() - 1);          // Map val to index
+        return true;
+    }
+
+    public boolean remove(int val) {
+        if (!map.containsKey(val)) return false;
+        
+        int index = map.get(val);               // Index of element to remove
+        int last = list.get(list.size() - 1);   // Last element in list
+
+        list.set(index, last);                  // Swap last with val
+        map.put(last, index);                   // Update last's index in map
+
+        list.remove(list.size() - 1);           // Remove last element
+        map.remove(val);                        // Remove val from map
+
+        return true;
+    }
+
+    public int getRandom() {
+        return list.get(rand.nextInt(list.size()));
+    }
+}
